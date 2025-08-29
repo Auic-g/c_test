@@ -22,9 +22,9 @@ void PrintList(SqList *L){
     printf("\n");
 }
 
-bool ListDelete(SqList *L, int i, ElemType *e) {
+bool ListDelete(SqList *L, int i) {
     if (i < 0 || i > L->length) return false;
-    *e = L->data[i];
+    ElemType e = L->data[i];
     for (int j = i; j < L->length; j++) {
         L->data[j] = L->data[j + 1];
     }
@@ -36,15 +36,14 @@ void Del_X(SqList *L, ElemType x) {
     int i = 1;
     while (i <= L->length) {
         if (L->data[i] == x) {
-            ElemType temp;
-            ListDelete(L, i, &temp);
+            ListDelete(L, i);
         } else {
             i++;
         }
     }
 }
 
-bool Del_Min(SqList *L,ElemType *value){
+bool Del_Min(SqList *L){
     if(L->length==0){
         printf("顺序表为空，无法删除元素！\n");
         exit(1);  //退出运行
@@ -56,7 +55,7 @@ bool Del_Min(SqList *L,ElemType *value){
             min_value = L->data[i];
             pos = i;
         }
-    *value = min_value;
+    ElemType value = min_value;
     L->data[pos]=L->data[L->length-1];
     L->length--;
     return true;
@@ -67,8 +66,7 @@ bool Del_s_t(SqList *L,ElemType s,ElemType t){
         return false;
     for(int i = 0; i < L->length; ){
         if(L->data[i] >= s && L->data[i] <= t){
-            ElemType temp;
-            ListDelete(L,i,&temp);
+            ListDelete(L,i);
         }else{
             i++;
         }
@@ -80,8 +78,7 @@ void Del_Repeated(SqList *L){
     for(int i = 0; i < L->length; i++){
         for(int j = i + 1; j < L->length; j++){
             if(L->data[i] == L->data[j]){
-                ElemType temp;
-                ListDelete(L,j,&temp);
+                ListDelete(L,j);
                 j--;
             }
         }

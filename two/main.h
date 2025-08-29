@@ -22,6 +22,7 @@ void Del_X(SqList *L, ElemType x);
 bool ListDelete(SqList *L, int i, ElemType *e);
 bool Del_s_t(SqList *L,ElemType s,ElemType t);
 void Del_Repeated(SqList *L);
+void Merge_two_list(SqList *L1, SqList *L2, SqList *L3);
 
 
 #endif

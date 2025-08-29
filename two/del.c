@@ -22,9 +22,9 @@ void PrintList(SqList *L){
     printf("\n");
 }
 
-bool ListDelete(SqList *L, int i) {
+bool ListDelete(SqList *L, int i, ElemType *e) {
     if (i < 0 || i > L->length) return false;
-    ElemType e = L->data[i];
+    *e = L->data[i];
     for (int j = i; j < L->length; j++) {
         L->data[j] = L->data[j + 1];
     }
@@ -36,7 +36,8 @@ void Del_X(SqList *L, ElemType x) {
     int i = 1;
     while (i <= L->length) {
         if (L->data[i] == x) {
-            ListDelete(L, i);
+            ElemType e;
+            ListDelete(L, i, &e);
         } else {
             i++;
         }
@@ -66,7 +67,8 @@ bool Del_s_t(SqList *L,ElemType s,ElemType t){
         return false;
     for(int i = 0; i < L->length; ){
         if(L->data[i] >= s && L->data[i] <= t){
-            ListDelete(L,i);
+            ElemType e;
+            ListDelete(L,i,&e);
         }else{
             i++;
         }
@@ -78,7 +80,8 @@ void Del_Repeated(SqList *L){
     for(int i = 0; i < L->length; i++){
         for(int j = i + 1; j < L->length; j++){
             if(L->data[i] == L->data[j]){
-                ListDelete(L,j);
+                ElemType e;
+                ListDelete(L,j,&e);
                 j--;
             }
         }

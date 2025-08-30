@@ -23,7 +23,13 @@ void ReverseArray(int a[], int n){
     }
 }
 
-//数组中两个线性表位置互换
-void Exchange_two_list(int a[], SqList *L1, SqList *L2){
-    
+void Reverse_s_t(int a[], int s, int t){
+    if(s > t) return;
+    int i, j, temp;
+    for(i = s, j = t; i < j; i++, j--){
+        temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
 }
+

@@ -24,7 +24,7 @@ bool Del_s_t(SqList *L,ElemType s,ElemType t);
 void Del_Repeated(SqList *L);
 void Merge_two_list(SqList *L1, SqList *L2, SqList *L3);
 void FreeList(SqList *L);
-void Exchange_two_list(int a[], SqList *L1, SqList *L2);
+void Reverse_s_t(int a[], int s, int t);
 
 
 #endif

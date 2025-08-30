@@ -33,3 +33,28 @@ void Reverse_s_t(int a[], int s, int t){
     }
 }
 
+//在长度为n顺序排列的线性表中以最短时间找到x，并将其与后继元素逆置
+void Reverse_List_x_after(SqList *L, int x, int n){
+    int i, j;
+    i = 0, j = n - 1;
+    while(i <= j){
+        if(x < L->data[j]){
+            j = (j + i) / 2;
+        }
+        i++;
+    }
+    for(j; j < j + i - 1;j++){
+        if(x == L->data[j]){
+            break;
+        }
+    }
+    ElemType temp = L->data[j + 1];
+    L->data[j + 1] = L->data[j];
+    L->data[j] = temp;
+}
+
+void Reverse_Array_P(int a[], int n, int p){
+    ReverseArray(a, n);
+    Reverse_s_t(a, 0, n - p - 1);
+    Reverse_s_t(a, n - p - 1, n - 1);
+}

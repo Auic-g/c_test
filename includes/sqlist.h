@@ -21,8 +21,12 @@ bool ListDelete(SqList *L, int i, SqElemType *e);
 bool Del_s_t(SqList *L,SqElemType s,SqElemType t);
 void Del_Repeated(SqList *L);
 void Merge_two_list(SqList *L1, SqList *L2, SqList *L3);
-void FreeList(SqList *L);
-void Reverse_s_t(int a[], int s, int t);
-
+void ClearList(SqList *L);
+void ReverseArray_s_t(int a[], int s, int t);
+void Reverse_List_x_after(SqList *L, int x);
+void Reverse_Array_P(int a[], int n, int p);
+void Find_Same_Elem(SqList *L1, SqList *L2, SqList *L3);
+void Find_middle_number(SqList *L1, SqList *L2, int n);
+int Find_main_element(int a[], int n);
 
 #endif

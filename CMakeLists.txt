@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(DataStructTest)
 
+add_compile_options(-fexec-charset=GBK)
+
 # 告诉编译器：去 includes 文件夹里找头文件
 include_directories(includes)
 

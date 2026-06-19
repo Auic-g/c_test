@@ -8,8 +8,8 @@ int main(){
     InitList(&L3);
     int a[6];
     a[0] = 1;
-    a[1] = 1;
-    a[2] = 1;
+    a[1] = 2;
+    a[2] = 3;
     a[3] = 4;
     a[4] = 5;
     a[5] = 6;
@@ -28,7 +28,8 @@ int main(){
     ListInsert(&L2,5,10);
     ListInsert(&L2,6,12);
 
-    Find_main_element(a, 6);
+    // Find_main_element(a, 6);
+    // Find_min_number_2(a, 6);
     // PrintList(&L1);
     // PrintList(&L2);
     // Merge_two_list(&L1, &L2, &L3);

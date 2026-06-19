@@ -242,3 +242,105 @@ int Find_main_element(int a[], int n){
     printf("无主元素\n");
     return -1; // No main element found
 }
+
+//求最小正整数（标准答案）
+int Find_min_number(int a[], int n){
+    if(n <= 0) return -1;
+    int b[n + 2];
+    for(int i = 0; i < n + 2; i++){
+        b[i] = 0;
+    }
+    for(int i = 0; i < n; i++){
+        if(a[i] > 0 && a[i] < n + 2){
+            b[a[i]] = 1;
+        }
+    }
+    for(int i = 1; i < n + 2; i++){
+        if(b[i] == 0){
+            printf("最小正整数为：%d\n", i);
+            return i;
+        }
+    }
+    return -1;
+}
+//快速排序(辅助算法)
+void QuickSort(int a[], int low, int high){
+    if(low >= high) return;
+    int pivot = a[low];
+    int i = low, j = high;
+    while(i < j){
+        while(i < j && a[j] >= pivot) j--;
+        if(i < j) a[i++] = a[j];
+        while(i < j && a[i] <= pivot) i++;
+        if(i < j) a[j--] = a[i];
+        a[i] = pivot;
+    }
+    QuickSort(a, low, i - 1);
+    QuickSort(a, i + 1, high);
+}
+//求最小正整数（考场答案）
+int Find_min_number_2(int a[], int n){
+    if(n <= 0) return -1;
+    QuickSort(a, 0, n - 1);
+    int min_val = 1;
+    for(int i = 0; i < n; i++){
+        if(a[i] == min_val){
+            min_val++;
+        }
+    }
+    printf("最小正整数为：%d\n", min_val);
+    return min_val;
+}
+
+//辅助函数：求绝对值
+int Abs(int a){
+    return a > 0 ? a : -a;
+}
+//最优解三元组
+void Find_three_elements(int a[], int b[], int c[], int n, int m, int p){
+    int i = 0, j = 0, k = 0;
+    int D = Abs(a[0] - b[0]) + Abs(a[0] - c[0]) + Abs(b[0] - c[0]);
+    int x, y, z;
+    while(i < n && j < m && k < p){
+        int current_D = Abs(a[i] - b[j]) + Abs(a[i] - c[k]) + Abs(b[j] - c[k]);
+        if(current_D < D){
+            D = current_D;
+            x = a[i];
+            y = b[j];
+            z = c[k];
+        }
+        if(a[i] <= b[j] && a[i] <= c[k]){
+            i++;
+        }
+        else if(b[j] <= a[i] && b[j] <= c[k]){
+            j++;
+        }
+        else{
+            k++;
+        }
+    }
+    printf("最小距离的三个元素为：%d, %d, %d\n", x, y, z);
+    printf("最小距离为：%d\n", D);
+}
+//暴力解三元组
+void Find_three_elements_2(int a[], int b[], int c[], int n, int m, int p){
+    int D = Abs(a[0] - b[0]) + Abs(a[0] - c[0]) + Abs(b[0] - c[0]);
+    int x, y, z;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            for(int k = 0; k < p; k++){
+                int current_D = Abs(a[i] - b[j]) + Abs(a[i] - c[k]) + Abs(b[j] - c[k]);
+                if(current_D < D){
+                    D = current_D;
+                    x = a[i];
+                    y = b[j];
+                    z = c[k];
+                }
+            }
+        }
+    }
+    printf("最小距离的三个元素为：%d, %d, %d\n", x, y, z);
+    printf("最小距离为：%d\n", D);
+}
+
+

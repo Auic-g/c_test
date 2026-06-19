@@ -28,5 +28,11 @@ void Reverse_Array_P(int a[], int n, int p);
 void Find_Same_Elem(SqList *L1, SqList *L2, SqList *L3);
 void Find_middle_number(SqList *L1, SqList *L2, int n);
 int Find_main_element(int a[], int n);
+int Find_min_number(int a[], int n);
+int Find_min_number_2(int a[], int n);
+void QuickSort(int a[], int low, int high);
+int Abs(int a);
+void Find_three_elements(int a[], int b[], int c[], int n, int m, int p);
+void Find_three_elements_2(int a[], int b[], int c[], int n, int m, int p);
 
 #endif

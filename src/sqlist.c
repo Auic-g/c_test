@@ -233,8 +233,12 @@ int Find_main_element(int a[], int n){
         for(int j = i + 1; j < n; j++){
             if(a[j] == main_element) count++;
         }
-        if(count > n / 2) return main_element;
+        if(count > n / 2){
+            printf("主元素为：%d\n", main_element);
+            return main_element;
+        }
         count = 1;
     }
+    printf("无主元素\n");
     return -1; // No main element found
 }

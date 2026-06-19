@@ -6,13 +6,13 @@ int main(){
     InitList(&L1);
     InitList(&L2);
     InitList(&L3);
-    // int a[6];
-    // a[0] = 1;
-    // a[1] = 2;
-    // a[2] = 3;
-    // a[3] = 4;
-    // a[4] = 5;
-    // a[5] = 6;
+    int a[6];
+    a[0] = 1;
+    a[1] = 1;
+    a[2] = 1;
+    a[3] = 4;
+    a[4] = 5;
+    a[5] = 6;
 
     //插入一些测试数据
     ListInsert(&L1,1,1);
@@ -28,11 +28,12 @@ int main(){
     ListInsert(&L2,5,10);
     ListInsert(&L2,6,12);
 
+    Find_main_element(a, 6);
     // PrintList(&L1);
     // PrintList(&L2);
     // Merge_two_list(&L1, &L2, &L3);
     // PrintList(&L3);
-    Find_middle_number(&L1, &L2, 6);
+    // Find_middle_number(&L1, &L2, 6);
 
     // for(int i = 0; i < 6; i++)
     //     printf("%d ", a[i]);

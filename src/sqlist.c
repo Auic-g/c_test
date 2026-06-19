@@ -225,6 +225,16 @@ void Find_Same_Elem(SqList *L1, SqList *L2, SqList *L3){
     printf("\n");
 }
 
+//求主元素
 int Find_main_element(int a[], int n){
-
+    int count = 1;
+    for(int i = 0; i < n; i++){
+        int main_element = a[i];
+        for(int j = i + 1; j < n; j++){
+            if(a[j] == main_element) count++;
+        }
+        if(count > n / 2) return main_element;
+        count = 1;
+    }
+    return -1; // No main element found
 }

@@ -7,4 +7,4 @@ add_compile_options(-fexec-charset=GBK)
 include_directories(includes)
 
 # 告诉编译器：把 main.c 和 src 里面的 sqlist.c 一起编译成一个叫 main_app 的程序
-add_executable(main_app main.c src/sqlist.c)
+add_executable(main_app main.c src/sqlist.c src/linklist.c)

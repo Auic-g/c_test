@@ -49,6 +49,29 @@ void Del_X(SqList *L, SqElemType x) {
         }
     }
 }
+//标准答案
+void Del_x_standard(SqList *L, SqElemType x){
+//本算法实现删除顺序表L中所有值为x的数据元素
+    int k = 0, i;                            //记录值不等于x的元素个数
+    for(i = 0; i < L->length; i++){
+        if(L->data[i] != x){
+            L->data[k] = L->data[i];
+            k++;                             //不等于x的元素加1
+        }
+    }
+    L->length = k;                           //顺序表L的长度等于k
+}
+void Del_x_standard_2(SqList *L, SqElemType x){
+    int k = 0, i = 0;                        //k记录值为x的元素个数
+    while(i < L->length){
+        if(L->data[i] == x)
+            k++;
+        else
+            L->data[i - k] = L->data[i];     //当前元素前移k个位置
+        i++;
+    }
+    L->length = L->length - k;               //顺序表L的长度递减
+}
 
 bool Del_Min(SqList *L){
     if(L->length==0){
@@ -67,6 +90,25 @@ bool Del_Min(SqList *L){
     L->length--;
     return true;
 }
+//标准答案
+bool Del_Min_standard(SqList *L, SqElemType *min_value){
+    //删除顺序表L中最小值元素结点，并通过引用型参数min_value返回其值
+    //若删除成功，则返回true；否则返回false
+    if(L->length == 0){
+        return false;         //表空，中止操作返回
+    }
+    *min_value = L->data[0];
+    int pos = 0;              //假定0号元素的值最小
+    for(int i = 1; i < L->length; i++){          //循环，寻找具有最小值的元素
+        if(L->data[i] < *min_value){             //让min_value记忆当前具有最小值的元素
+            *min_value = L->data[i];
+            pos = i;
+        }
+    }
+    L->data[pos] = L->data[L->length - 1];     //用最后一个元素覆盖pos位置的元素
+    L->length--;
+    return true;                               //此时，min_value为最小值
+}
 
 bool Del_s_t(SqList *L,SqElemType s,SqElemType t){
     if(s >= t || L->length == 0)
@@ -80,9 +122,24 @@ bool Del_s_t(SqList *L,SqElemType s,SqElemType t){
     L->length = k;
     return true;
 }
+bool Del_s_t_standard(SqList *L, SqElemType s, SqElemType t){
+    //删除顺序表L中值在s和t之间的元素
+    int i, k = 0;
+    if(L->length == 0 || s > t)
+        return false;
+    for(i = 0; i < L->length; i++){
+        if(L->data[i] >= s &&L->data[i] <= t)
+            k++;
+        else
+            L->data[i - k] = L->data[i];
+    }
+    L->length -= k;
+    return true;
+    
+}
 
 void Del_Repeated(SqList *L){
-    if(L->length <= 1) return;
+    if(L->length < 1) return;
     
     int k = 1;
     for(int i = 1; i < L->length; i++){
@@ -91,6 +148,17 @@ void Del_Repeated(SqList *L){
         }
     }
     L->length = k;
+}
+//标准答案
+bool Del_Same(SqList *L){
+    if(L->length == 0)
+        return false;
+    int i,j;                                  //i存储第一个不相同的元素，j为工作指针
+    for(i = 0, j = 1; j < L->length; j++)
+        if(L->data[i] != L->data[j])          //查找上一个与下一个元素不同的元素
+            L->data[++i] = L->data[j];        //找到后，将元素前移
+    L->length = i + 1;
+    return true;
 }
 
 //Merge
@@ -105,13 +173,32 @@ void Merge_two_list(SqList *L1, SqList *L2, SqList *L3){
     }
     L3->length = L1->length + L2->length;
 }
+//标准答案
+bool Merge(SqList A, SqList B, SqList *C){
+    //将有序顺序表A和B合并为一个新的有序顺序表C
+    if(A.length + B.length > SqList_MaxSize)
+        return false;
+    int i = 0, j = 0, k = 0;
+    while(i < A.length && j < B.length){
+        if(A.data[i] <= B.data[j])
+            C->data[k++] = A.data[i++];
+        else
+            C->data[k++] = B.data[j++];
+    }
+    while(i < A.length)
+        C->data[k++] = A.data[i++];
+    while(j < B.length)
+        C->data[k++] = B.data[j++];
+    C->length = k;
+    return true;
+}
 
 //Reverse
 void ReverseList(SqList *L){
     int i,j;
-    SqElemType temp;
+    SqElemType temp;                                //辅助变量
     for (i = 0 , j = L->length - 1; i < j; i++, j--){
-        temp = L->data[i];
+        temp = L->data[i];                          //交换L->data[i]和L->data[j]
         L->data[i] = L->data[j];
         L->data[j] = temp;
     }
@@ -152,6 +239,25 @@ void Reverse_List_x_after(SqList *L, int x){
     if(left > right){
         ListInsert(L, left + 1, x);
     }
+}
+//标准答案
+void SearchExchangeInsert(int a[], int n, int x){
+    int low = 0, high = n - 1, mid, t;                        //low和high指向顺序表下界和上界的下标
+    while(low <= high){
+        mid = (low + high) / 2;                               //找到中间位置
+        if(a[mid] == x) break;                                //找到x，退出while循环
+        else if(a[mid] < x) low = mid + 1;                    //到中点x的右半部去查
+        else high = mid - 1;                                  //到中点x的左半部去查
+    }    //下面两个if语句只会执行一个
+    if(a[mid] == x && mid != n - 1){                          //若最后一个元素与x相等，则不存在与其后继交换的操作
+        t = a[mid];
+        a[mid] = a[mid + 1];
+        a[mid + 1] = t;
+    }
+    if(low > high){                                           //查找失败，插入数据元素x
+        for(int j = n - 1; j >= low; j--) a[j + 1] = a[j];    //后移元素
+        a[low] = x;                                           //插入x
+    }                                                         //结束插入
 }
 
 void Reverse_Array_P(int a[], int n, int p){

@@ -21,6 +21,12 @@ typedef struct {
     LinkElemType data;
     int length;
 } SLinkList[MaxSize];
+//13.特殊双链表
+typedef struct DNode2 {
+    LinkElemType data;
+    int freq;
+    struct DNode2 *pre, *next;
+} DNode2, *DLinkList2;
 
 
 

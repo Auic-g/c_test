@@ -136,13 +136,14 @@ bool Del_x(LinkList *L, LinkElemType x){
             p->next = q->next;
             free(q);
         }
+        p = p->next;
     }
     return true;
 }
 
 //2.删除最小值节点(带头结点单链表)
 bool Del_Min(LinkList *L){
-    LNode *p = *L, *q = p->next,  *min = p->next;
+    LNode *p = *L, *q = p->next, *min = p->next;
     while(p->next != NULL){
         if(p->next->data < min->data){
             min = p->next;
@@ -153,7 +154,6 @@ bool Del_Min(LinkList *L){
     q->next = min->next;
     free(min);
     return true;
-    
 }
 
 //3.将带头结点的单链表逆置，空间复杂度O(1)
@@ -162,11 +162,23 @@ LinkList Reverse(LinkList *L){
     p->next = NULL;
     while(q != NULL){
         r = q->next;
-        q->next = p;
-        p = q;
+        q->next = p->next;
+        p->next = q;
         q = r;
     }
-    *L = p;
+    return *L;
+}
+//参考答案
+LinkList Reverse2(LinkList *L){
+    LNode *pre, *p = (*L)->next, *r = p->next;
+    p->next = NULL;
+    while(r != NULL){
+        pre = p;
+        p = r;
+        r = r->next;
+        p->next = pre;
+    }
+    (*L)->next = p;
     return *L;
 }
 
@@ -203,9 +215,9 @@ LinkList Split(LinkList *L){
         p->next = q->next;
         a->next = q;
         p->next = r->next;
+        r->next = b->next;
         b->next = r;
         a = q;
-        b = r;
     }
     return A;
     return B;
@@ -471,5 +483,29 @@ void Delete_Equal(LinkList *L, int n){
 }
 
 //20.重新排序单链表中各个节点的顺序
-
+void Reorder(LinkList *L, int n){
+    LNode *p = *L, *fast = p->next, *slow = p->next;
+    while(fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    fast = slow->next;
+    slow->next = NULL;
+    LNode *q, *r = NULL;
+    while(fast != NULL){
+        q = fast->next;
+        fast->next = r;
+        r = fast;
+        fast = q;
+    }
+    fast = r;
+    while(fast != NULL){
+        p = p->next;
+        r = fast->next;
+        fast->next = p->next;
+        p->next = fast;
+        fast = r;
+        p = p->next;
+    }
+}
 

@@ -324,7 +324,7 @@ bool Is_Symmetry(DLinkList *L){
 }
 
 //12.编写一个函数将一个循环单链表h2链接到另一个循环单链表h1后，要求链接后的链表仍保持循环单链表形式
-void Link_List(LinkList *L1, LinkList *L2){ 
+LinkList Link(LinkList *L1, LinkList *L2){ 
     LNode *h1 = *L1, *h2 = *L2, *p = h1, *q = h2;
     while(p->next != h1){
         p = p->next;
@@ -332,9 +332,9 @@ void Link_List(LinkList *L1, LinkList *L2){
     while(q->next != h2){
         q = q->next;
     }
-    p->next = h2->next;
+    p->next = h2;
     q->next = h1;
-    free(h2);
+    return h1;
 }
 
 //13.按freq降序排列双链表节点
@@ -346,7 +346,7 @@ DNode2* Locate(DLinkList2 *L, int x){
     if(q == NULL) return NULL;
     q->freq++;
     DNode2 *preNode = q->pre;
-    if(preNode == *L || q->pre < preNode->freq){
+    if(preNode == *L || q->freq < preNode->freq){
         return q;
     }
     preNode->next = q->next;
@@ -380,6 +380,22 @@ void Move_Right(LinkList *L, int k, int n){
         p = p->next;
     }
 }
+//参考答案
+LNode* Converse(LNode *L, int k){
+    int n = 1;
+    LNode *p = L;
+    while(p->next != NULL){
+        p = p->next;
+        n++;
+    }
+    p->next = L;
+    for(int i = 1; i <= n - k; i++){
+        p = p->next;
+    }
+    L = p->next;
+    p->next = NULL;
+    return L;
+}
 
 //15.判断单链表是否有环
 bool Has_Circle(LinkList *L){
@@ -410,6 +426,31 @@ int Max_Sum(LinkList *L, int n){
     }
     return max;
 }
+//参考答案
+int Pair_Sum(LinkList *L){
+    LNode *fast = (*L)->next, *slow = *L;
+    while(fast != NULL && fast->next != NULL){ 
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    LNode *newHead = NULL, *p = slow->next, *tmp;
+    while(p != NULL){ 
+        tmp = p->next;
+        p->next = newHead;
+        newHead = p;
+        p = tmp;
+    }
+    int mx = 0; p = L;
+    LNode *q = newHead;
+    while(q != NULL){ 
+        if(p->data + q->data > mx){
+            mx = p->data + q->data;
+        }
+        p = p->next;
+        q = q->next;
+    }
+    return mx;
+}
 
 //17.查找倒数第k个结点的值（2009）
 int Find_Kth(LinkList *L, int k){ 
@@ -428,6 +469,27 @@ int Find_Kth(LinkList *L, int k){
     }
     return p->data;
     return 1;
+}
+//参考答案
+int Search_k(LinkList *L, int k){
+    LNode *p = (*L)->next, *q = p;
+    int count = 0;
+    while(p != NULL){
+        if(count < k){
+            count++;
+        }
+        else{
+            q = q->next;
+        }
+        p = p->next;
+    }
+    if(count < k){
+        return 0;
+    }
+    else{
+        printf("%d", q->data);
+        return 1;
+    }
 }
 
 //18.找出两个带头节点单链表共同后缀的起始位置（2012）
@@ -460,6 +522,30 @@ int Find_Common_Suffix(LNode *str1, LNode *str2){
     }
     return p->data;
 }
+//参考答案
+int listlen(LNode *head){
+    int len = 0;
+    while(head != NULL){
+        len++;
+        head = head->next;
+    }
+    return len;
+}
+LNode* find_list(LNode *str1, LNode *str2){
+    int m,n;
+    LNode *p, *q;
+    m = listlen(str1);
+    n = listlen(str2);
+    for(p = str1; m > n; m--)
+        p = p->next;
+    for(q = str2; m < n; n--)
+        q = q->next;
+    while(p->next != NULL && p->next != q->next){
+        p = p->next;
+        q = q->next;
+    }
+    return p->next;
+}
 
 //19.删除绝对值相等的节点，只保留第一次出现的（2015）
 void Delete_Equal(LinkList *L, int n){
@@ -482,7 +568,7 @@ void Delete_Equal(LinkList *L, int n){
     }
 }
 
-//20.重新排序单链表中各个节点的顺序
+//20.重新排序单链表中各个节点的顺序(2019)
 void Reorder(LinkList *L, int n){
     LNode *p = *L, *fast = p->next, *slow = p->next;
     while(fast != NULL && fast->next != NULL){

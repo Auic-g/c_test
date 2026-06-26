@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sqlist.h"
+#include "stack.h"
 
 int main(){
     SqList L1, L2, L3;
